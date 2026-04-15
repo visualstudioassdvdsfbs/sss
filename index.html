@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subho Noboborsho ❤️</title>
+
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:black;
+  overflow:hidden;
+  color:white;
+}
+
+.slide {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:1.5s ease-in-out;
+}
+
+.active { opacity:1; }
+
+.overlay {
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:1;
+}
+
+.caption {
+  position:absolute;
+  bottom:80px;
+  width:100%;
+  text-align:center;
+  font-size:1.5rem;
+  z-index:2;
+  opacity:0;
+  transition:1s;
+}
+
+.caption.show { opacity:1; }
+
+.center {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:2;
+  text-align:center;
+}
+
+button {
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  background:#ff4b2b;
+  color:white;
+  cursor:pointer;
+  font-size:1rem;
+}
+
+.final {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  font-size:2rem;
+  display:none;
+  z-index:3;
+}
+
+/* hearts */
+.heart {
+  position:absolute;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  0%{transform:translateY(100vh);opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<!-- Slides -->
+<img src="image1.png" class="slide active">
+<img src="image2.png" class="slide">
+<img src="image3.png" class="slide">
+<img src="image4.png" class="slide">
+<img src="image5.png" class="slide">
+<img src="image1.png" class="slide">
+
+<!-- Captions -->
+<div class="caption" id="caption"></div>
+
+<!-- Start Screen -->
+<div class="center" id="startScreen">
+  <h1>শুভ নববর্ষ ❤️</h1>
+  <button onclick="startShow()">Start Our Story 💌</button>
+</div>
+
+<!-- Final Screen -->
+<div class="final" id="finalScreen">
+  💍 Will you be mine forever? ❤️
+</div>
+
+<audio id="bgMusic">
+  <source src="Gehra Hua Dhurandhar 128 Kbps.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const captionBox = document.getElementById('caption');
+const finalScreen = document.getElementById('finalScreen');
+
+let index = 0;
+
+// Romantic captions per photo
+const captions = [
+  "The day I realized you are my happiness 💖",
+  "Every moment with you feels magical ✨",
+  "Your smile is my favorite view 😍",
+  "With you, life feels complete ❤️",
+  "Every journey is beautiful with you 🌍",
+  "You are my forever and always 💞"
+];
+
+// Beat sync timing (in seconds - adjust to your song)
+const beats = [0, 4, 8, 12, 16, 20];
+
+function startShow(){
+  document.getElementById('startScreen').style.display='none';
+  const music = document.getElementById('bgMusic');
+  music.play();
+
+  beats.forEach((time, i)=>{
+    setTimeout(()=>{
+      changeSlide(i);
+    }, time * 1000);
+  });
+
+  // Show final message after last slide
+  setTimeout(()=>{
+    slides.forEach(s=>s.classList.remove('active'));
+    captionBox.classList.remove('show');
+    finalScreen.style.display='block';
+  }, 24000);
+}
+
+function changeSlide(i){
+  slides.forEach(s=>s.classList.remove('active'));
+  slides[i].classList.add('active');
+
+  captionBox.innerText = captions[i];
+  captionBox.classList.add('show');
+}
+
+// hearts
+function createHeart(){
+  const heart=document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerHTML='❤️';
+  heart.style.left=Math.random()*100+'vw';
+  heart.style.fontSize=(Math.random()*20+10)+'px';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,300);
+</script>
+
+</body>
+</html>
